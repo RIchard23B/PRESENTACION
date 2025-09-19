@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DOP - Barra de Chocolate</title>
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <h1>DOP - Diagrama de Operaciones de Procesos 🍫</h1>
+  <h2>Proceso: Barra de Chocolate Nutricional</h2>
+
+<section>
+  <div class="flujo">
+    <video src="assets/video/DOP.mp4" controls width="50%"></video>
+  </div>
+</section>
+  
+<section class="section">
+  <h2>Gráfica de DOP de manera Horizontal</h2><br>
+    <div class="flujo">
+    <!-- Operación -->
+    <div class="nodo operacion">
+      <span class="texto">O</span>
+      <div class="tooltip">Operación: Derretir el chocolate <br><br>
+        <img src="assets/img/choco-derre.jpg" width="150px" alt="">
+      </div>
+    </div>
+
+    <div class="flecha">➡️</div>
+
+    <!-- Operación -->
+    <div class="nodo operacion">
+      <span class="texto">O</span>
+      <div class="tooltip">Operación: Mezclar elementos nutricionales<br><br>
+        <img src="assets/img/mezcla.jpg" width="150px" alt=""></div>
+    </div>
+
+   <div class="flecha">➡️</div>
+
+    <!-- Operación -->
+    <div class="nodo operacion">
+      <span class="texto">O</span>
+      <div class="tooltip">Operación: Agregar proteína en polvo<br><br>
+        <img src="assets/img/proteina.jpg" width="150px" alt=""></div>
+    </div>
+
+   <div class="flecha">➡️</div>
+
+    <!-- Inspección -->
+    <div class="nodo inspeccion">
+      <span class="texto">I</span>
+      <div class="tooltip">Inspección: Revisar textura y sabor<br><br>
+        <img src="assets/img/supcalidad.png" width="150px" alt=""></div>
+    </div>
+
+    <div class="flecha">➡️</div>
+
+    <!-- Espera -->
+    <div class="nodo espera">
+      <div class="tooltip">Espera: Refrigerar 2 horas<br><br>
+        <img src="assets/img/refrigeracion.jpg" width="100px" alt=""></div>
+    </div>
+
+    <div class="flecha">➡️</div>
+
+    <!-- Operación -->
+    <div class="nodo operacion">
+      <span class="texto">O</span>
+      <div class="tooltip">Operación: Cortar en barritas<br><br>
+        <img src="assets/img/cortar-choco.webp" width="150px" alt=""></div>
+    </div>
+
+    <div class="flecha">➡️</div>
+
+    <!-- Almacén -->
+    <div class="nodo almacen">
+      <span class="texto">A</span>
+      <div class="tooltip">Almacenamiento: Empacar y guardar<br><br>
+        <img src="assets/img/almacenamiento.jpg" width="150px" alt=""></div>
+    </div>
+  </div>
+</section>
+  
+    <h1>DAP - Diagrama de Análisis del Proceso 🍫</h1>
+    <h2>Proceso: Barra de Chocolate Nutricional</h2>
+  <section>
+    <div class="flujo">
+        <video src="assets/video/DAP.mp4" width="50%" controls></video>
+    </div>
+  </section>
+  <br>
+  <br>
+  <br>
+    <h2>Gráfica de DAP de manera Vertical</h2><br>
+
+<section>
+    <div class="flujo2">
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Derretir chocolate</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Mezclar elementos nutricionales</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Agregar proteína en polvo</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Incorporar avena y semillas</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Añadir frutas deshidratadas y endulzante</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 inspeccion2"><span class="texto">🔍</span><div class="tooltip2">Inspección: Revisar consistencia y sabor</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Verter mezcla en molde</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Compactar y nivelar</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 transporte"><span class="texto">🚚</span><div class="tooltip2">Transporte: Llevar al refrigerador</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2"><span class="texto">⏳</span><div class="tooltip2">Espera: Refrigerar 2 horas</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Cortar en barritas</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 inspeccion2"><span class="texto">🔍</span><div class="tooltip2">Inspección: Revisar tamaño uniforme</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">⚙️</span><div class="tooltip2">Operación: Empacar</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 almacen2"><span class="texto">📦</span><div class="tooltip2">Almacenamiento: Guardar producto</div></div>
+        <div class="flecha">⬇️</div>
+        <div class="nodo2 operacion2"><span class="texto">🍫</span><div class="tooltip2">Producto final: Barra de chocolate fitness</div></div>
+  </div>
+
+</section> 
+
+<br>
+<b><br></b>
+<div class="flujo">
+    <button onclick="location.href='diag_reco.html'">Diagrama de Recorrido</button>
+    <button onclick="location.href='study_work.html'">Estudio del trabajo</button>
+</div>
+
+
+</body>
+</html>

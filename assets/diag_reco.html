@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mapa interactivo - Planta Barra de Chocolate</title>
+<link rel="stylesheet" href="assets/css/style2.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Diagrama de Recorrido - Planta (Barra de Chocolate Nutricional)</h1>
+      <div class="controls">
+        <button id="playBtn" class="btn">▶ Reproducir flujo</button>
+        <button id="resetBtn" class="btn secondary">⟲ Reset</button>
+        <div class="legend" title="Leyenda">
+          <div class="item"><span class="sw" style="background:#ff6666;border-radius:50%"></span> Operación</div>
+          <div class="item"><span class="sw" style="background:#66b3ff;border-radius:3px"></span> Inspección</div>
+          <div class="item"><span class="sw" style="background:#ffa64d;border-radius:3px"></span> Transporte</div>
+          <div class="item"><span class="sw" style="background:#ffcc66;clip-path:polygon(50% 0,0 100%,100% 100%);"></span> Espera</div>
+          <div class="item"><span class="sw" style="background:#85e085;border-radius:6px"></span> Almacenamiento</div>
+        </div>
+      </div>
+    </header>
+
+    <div class="canvas-wrap">
+      <!-- MAP -->
+      <div class="map" id="map" aria-label="Mapa de planta">
+        <!-- We'll use SVG for areas and arrows -->
+        <svg id="svgmap" viewBox="0 0 1200 700" width="100%" height="99%" preserveAspectRatio="xMidYMid meet" style="background:linear-gradient(180deg,#fff9f6, #fff);border-radius:8px">
+          <defs>
+            <marker id="arrowHead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+            </marker>
+            <linearGradient id="glassGrad" x1="0" x2="1">
+              <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#f3f6fa" stop-opacity="0.9"/>
+            </linearGradient>
+            <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+              <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000" flood-opacity="0.12"/>
+            </filter>
+            <style>
+              .areaText { font: 600 14px/1 "Inter", Arial; fill: #222; }
+              .subText { font: 400 12px/1 "Inter", Arial; fill: #444;}
+            </style>
+          </defs>
+
+          <!-- Background floor -->
+          <rect x="24" y="24" rx="8" ry="8" width="1150" height="640" fill="url(#glassGrad)" stroke="#e6e9ee"/>
+
+          <!-- Areas: coordinates & sizes tuned for a realistic layout -->
+          <!-- Area: Materia prima / Derretir (Left top) -->
+          <g class="area-group" id="area-derretir" data-step="Derretir chocolate" data-type="Operación">
+            <rect x="40" y="48" rx="10" ry="10" width="200" height="130" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <!-- simple pictogram (pot + flame) -->
+            <g transform="translate(90,80)">
+              <circle cx="12" cy="8" r="8" fill="#b23b5a" />
+              <text y="35" class="areaText">Derretir</text>
+              <text y="55" class="subText">Chocolate (baño maría)</text>
+            </g>
+          </g>
+
+          <!-- Area: Mesa de preparación (mix) -->
+          <g class="area-group" id="area-mezclar" data-step="Mezclar elementos nutricionales" data-type="Operación">
+            <rect x="40" y="250" rx="10" ry="10" width="200" height="140" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(90,230)">
+              <circle cx="12" cy="68" r="8" fill="#b23b5a" />
+              <text y="98" class="areaText">Mesa de preparación</text>
+              <text y="118" class="subText">Mezclar ingredientes</text>
+            </g>
+          </g>
+
+          <!-- Area: Agregar proteína / secos -->
+          <g class="area-group" id="area-proteina" data-step="Agregar proteína en polvo / incorporar avena y semillas" data-type="Operación">
+            <rect x="320" y="48" rx="10" ry="10" width="210" height="130" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(380,80)">
+              <circle cx="12" cy="8" r="8" fill="#b23b5a" />
+              <text y="38" class="areaText">Proteína y secos</text>
+              <text y="58" class="subText">Polvo, avena, semillas</text>
+            </g>
+          </g>
+
+          <!-- Area: Añadir frutas -->
+          <g class="area-group" id="area-frutas" data-step="Añadir frutas deshidratadas y endulzante" data-type="Operación">
+            <rect x="360" y="200" rx="10" ry="10" width="220" height="120" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(380,230)">
+              <circle cx="12" cy="8" r="8" fill="#b23b5a" />
+              <text x="40" y="18" class="areaText">Frutas y endulz</text>
+              <text x="40" y="36" class="subText">Agregar y ajustar dulzor</text>
+            </g>
+          </g>
+
+          <!-- Area: Inspección (center) -->
+          <g class="area-group" id="area-inspeccion" data-step="Inspección: consistencia/sabor" data-type="Inspección">
+            <rect x="600" y="48" rx="10" ry="10" width="150" height="120" fill="#fff" stroke="#cfe7ff" stroke-width="2" filter="url(#shadow)"/>
+            <g transform="translate(680,80)">
+              <rect x="-50" y="0" width="20" height="20" rx="6" fill="#66b3ff"/>
+              <text x="-50" y="40" class="areaText">Inspección</text>
+              <text x="-50" y="60" class="subText">Consistencia / sabor</text>
+            </g>
+          </g>
+
+          <!-- Area: Moldes (verter + compactar) -->
+          <g class="area-group" id="area-moldes" data-step="Verter mezcla en molde / Compactar y nivelar" data-type="Operación">
+            <rect x="100" y="450" rx="10" ry="10" width="420" height="160" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(80,430)">
+              <circle cx="100" cy="80" r="8" fill="#b23b5a" />
+              <text x="140" y="80" class="areaText">Área de moldes</text>
+              <text x="140" y="100" class="subText">Verter y compactar</text>
+            </g>
+          </g>
+
+          <!-- Area: Refrigeración (right center) -->
+          <g class="area-group" id="area-refrigeracion" data-step="Transporte al refrigerador y espera 2 h" data-type="Transporte / Espera">
+            <rect x="590" y="260" rx="10" ry="10" width="230" height="150" fill="#f7fbff" stroke="#cfe7ff" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(540,300)">
+              <circle cx="80" cy="8" r="8" fill="#b23b5a" />
+              <circle cx="100" cy="8" r="8" fill="#ffcc66" />
+              <rect x="113" y="0" width="20" height="20" rx="6" fill="#ffa64d"/>
+              <text x="84" y="36" class="areaText">Cámara fría</text>
+              <text x="84" y="56" class="subText">Refrigerar 2 h</text>
+            </g>
+          </g>
+
+          <!-- Area: Corte -->
+          <g class="area-group" id="area-corte" data-step="Cortar en barritas" data-type="Operación">
+            <rect x="860" y="48" rx="10" ry="10" width="300" height="120" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(780,80)">
+              <circle cx="115" cy="8" r="8" fill="#b23b5a" />
+              <text x="110" y="38" class="areaText">Mesa de corte</text>
+              <text x="110" y="58" class="subText">Cortar y preparar</text>
+            </g>
+          </g>
+
+          <!-- Area: Inspección final / Empaque -->
+          <g class="area-group" id="area-empaque" data-step="Inspección (tamaño) y Empacar" data-type="Operación">
+            <rect x="860" y="210" rx="10" ry="10" width="300" height="160" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(780,230)">
+              <circle cx="115" cy="20" r="8" fill="#b23b5a" />
+              <rect x="130" y="10" width="20" height="20" rx="6" fill="#66b3ff"/>
+              <text x="110" y="48" class="areaText">Empaque</text>
+              <text x="110" y="68" class="subText">Inspección final y embalaje</text>
+            </g>
+          </g>
+
+          <!-- Area: Almacén -->
+          <g class="area-group" id="area-almacen" data-step="Almacenamiento" data-type="Almacén">
+            <rect x="860" y="400" rx="10" ry="10" width="280" height="150" fill="#fff" stroke="#e1d6c9" stroke-width="1.6" filter="url(#shadow)"/>
+            <g transform="translate(780,430)">
+              <rect x="110" y="0" width="20" height="20" rx="6" fill="#85e085"/>
+              <text x="110" y="38" class="areaText">Almacén</text>
+              <text x="110" y="58" class="subText">Estantes / cajas</text>
+            </g>
+          </g>
+
+          <!-- Product final icon -->
+          <g id="area-final">
+            <text x="900" y="620" font-size="20" font-weight="700" fill="#6b4226">🍫 Producto final</text>
+          </g>
+
+          <!-- Path arrows (flow) - composed of lines & arrowheads -->
+          <g id="flow-arrows" stroke="#444" stroke-width="3" fill="none" marker-end="url(#arrowHead)">
+            <!-- from derretir -> mezclar (down) -->
+            <path d="M190 178 L190 240" stroke-linecap="round"/>
+            <!-- derretir -> proteina (right) -->
+            <path d="M200 270 L360 120" stroke-linecap="round"/>
+            <!-- proteina -> frutas (down) -->
+            <path d="M490 150 L490 220" stroke-linecap="round"/>
+            <!-- fruits -> inspección (right) -->
+            <path d="M560 220 L650 150" stroke-linecap="round"/>
+            <!-- inspección -> moldes (down-left) -->
+            <path d="M680 160 L500 450" stroke-linecap="round"/>
+            <!-- moldes -> refrigeración (right) -->
+            <path d="M490 490 L620 380" stroke-linecap="round"/>
+            <!-- refrigeración -> corte (up-right) -->
+            <path d="M780 300 L880 150" stroke-linecap="round"/>
+            <!-- corte -> empaque (down) -->
+            <path d="M910 170 L910 230" stroke-linecap="round"/>
+            <!-- empaque -> almacen (down) -->
+            <path d="M910 355 L910 420" stroke-linecap="round"/>
+            <!-- almacen -> final -->
+            <path d="M910 520 L960 600" stroke-linecap="round"/>
+          </g>
+
+          <!-- animated dot that travels path -->
+          <circle id="flowDot" cx="-20" cy="-20" r="8" fill="#ff6f3c" visibility="hidden" filter="url(#shadow)"></circle>
+
+        </svg>
+
+        <!-- Tooltip container (absolute) -->
+        <div id="tooltip" class="tooltip" role="tooltip" aria-hidden="true"></div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <aside class="panel" id="infoPanel" aria-live="polite">
+        <h2>Detalle de estación</h2>
+        <div class="desc" id="panelDesc">Pasa el cursor sobre una zona del mapa para ver la descripción. Haz click para fijar el detalle aquí.</div>
+
+        <div class="step" id="panelStep" style="display:none"></div>
+
+        <div style="flex:1"></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <!--button id="zoomIn" class="btn secondary">🔍 Zoom</button>
+          <button id="downloadBtn" class="btn">📥 Descargar imagen</button-->
+          <button onclick="location.href='study_work.html'">Estudio del trabajo</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
